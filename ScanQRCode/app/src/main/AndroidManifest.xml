@@ -6,6 +6,10 @@
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" >
     </uses-permission>
+    <uses-feature android:name="android.hardware.camera"
+        android:required="true" />
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -15,6 +19,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar"
         >
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.example.scanqrcode"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths"></meta-data>
+        </provider>
         <activity
             android:name=".SnapActivity"
             android:screenOrientation="fullSensor" />

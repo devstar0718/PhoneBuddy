@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     JSONObject obj = new JSONObject(result.getContents());
                     textViewIP.setText(obj.getString("ip"));
                     textViewPort.setText(obj.getString("port"));
+                    this.onClick(buttonConnect);
                 } catch (JSONException e) {
                     e.printStackTrace();
                     Toast.makeText(this, result.getContents(), Toast.LENGTH_LONG).show();
@@ -79,7 +80,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-//                        tvMessages.setText("Connected\n");
                 findViewById(R.id.loadingPanel).setVisibility(View.GONE);
             }
         });
@@ -87,6 +87,4 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Bundle extras = new Bundle();
         startActivity(intent);
     }
-
-
 }

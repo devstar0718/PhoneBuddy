@@ -76,6 +76,7 @@
             this.pictureBoxImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBoxImage.TabIndex = 3;
             this.pictureBoxImage.TabStop = false;
+            this.pictureBoxImage.DoubleClick += new System.EventHandler(this.pictureBoxImage_DoubleClick);
             // 
             // tableLayoutPanel2
             // 

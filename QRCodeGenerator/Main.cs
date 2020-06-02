@@ -19,12 +19,14 @@ namespace QRCodeGenerator
     public partial class Main : Form
     {
         ITcpServer server = null;
-        String socketImage;
+        //String socketImage;
+        StringBuilder socketImage;
         public Main()
         {
             InitializeComponent();
             textBoxIP.Text = "10.10.10.222";
             textBoxPort.Text = "8090";
+            socketImage = new StringBuilder();
         }
 
         private void buttonQRGen_Click(object sender, EventArgs e)
@@ -69,33 +71,17 @@ namespace QRCodeGenerator
                 OnReceived = (c) =>
                 {
                     Console.WriteLine($"Received from {c.RemoteEndPoint}:");
-                    //Console.WriteLine(string.Join(" ", c.Buffers.Select(x => x.ToString()).ToArray()));
-                    //Console.WriteLine(c.Buffers.ToString());
                     String content = System.Text.Encoding.Default.GetString(c.Buffers);
                     Console.WriteLine(content);
-                    socketImage += content;
 
-                    if(content.Contains("*Start*"))
+                    int split = content.IndexOf("#"); // # is the spliter between length and data
+                    int token_number = int.Parse(content.Substring(0, split));
+                    Console.WriteLine("Token number: " + token_number.ToString());
+
+                    if (token_number == -1) // end of data
                     {
-                    
-                    }
-                    else if(content.Contains("*End*"))
-                    {
-                        int start = socketImage.IndexOf("*Start*");
-                        start += "*Start*".Length;
-                        int end = socketImage.IndexOf("*End*");
-                        string realImage = socketImage.Substring(start, end - start);
                         byte[] data;
-                        try
-                        {
-                            data = Convert.FromBase64String(realImage);
-                        }
-                        catch (System.FormatException)
-                        {
-                            Console.WriteLine("Invalid Format");
-                            socketImage = "";
-                            return;
-                        }
+                        data = Convert.FromBase64String(socketImage.ToString());
                         using (var stream = new MemoryStream(data, 0, data.Length))
                         {
                             try
@@ -104,15 +90,21 @@ namespace QRCodeGenerator
                                 //TODO: do something with image
                                 pictureBoxImage.Image = image;
                             }
-                            catch(ArgumentException)
+                            catch (ArgumentException)
                             {
                                 Console.WriteLine("Invalid Image");
                             }
                         }
-                        socketImage = "";
+                        socketImage.Clear();
                     }
-
-                    //c.NetConnection.Send(c.Buffers);
+                    else
+                    {
+                        String imageData = content.Substring(split + 1);
+                        socketImage.Append(imageData);
+                        Console.WriteLine("Token size: " + imageData.Length.ToString());
+                    }
+                    byte[] reply = Encoding.ASCII.GetBytes(token_number.ToString() + "\n");
+                    c.NetConnection.Send(reply);
                 },
                 OnDisconnected = (c) =>
                 {
@@ -136,6 +128,11 @@ namespace QRCodeGenerator
                 }
             };
             server.Start();
+        }
+
+        private void pictureBoxImage_DoubleClick(object sender, EventArgs e)
+        {
+            Clipboard.SetImage(pictureBoxImage.Image);
         }
     }
 }
