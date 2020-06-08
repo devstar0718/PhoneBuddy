@@ -3,6 +3,7 @@ package com.example.scanqrcode;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -41,6 +42,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         buttonConnect.setOnClickListener(this);
 
         socketHandler = SocketHandler.getInstance();
+
+        loadSocketInfo();
     }
 
     @Override
@@ -76,7 +79,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    public void saveSocketInfo(){
+        SharedPreferences mPrefs = getSharedPreferences("Socket", 0);
+        SharedPreferences.Editor mEditor = mPrefs.edit();
+        mEditor.putString("ip", textViewIP.getText().toString()).apply();
+        mEditor.putString("port", textViewPort.getText().toString()).apply();
+    }
+
+    public void loadSocketInfo(){
+        SharedPreferences mPrefs = getSharedPreferences("Socket", 0);
+        String ip = mPrefs.getString("ip", "0.0.0.0");
+        String port = mPrefs.getString("port", "8090");
+        textViewIP.setText(ip);
+        textViewPort.setText(port);
+    }
+
     public void startSnapActivity() {
+        saveSocketInfo();
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
