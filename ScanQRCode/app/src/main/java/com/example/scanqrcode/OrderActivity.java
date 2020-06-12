@@ -47,10 +47,10 @@ public class OrderActivity extends AppCompatActivity implements View.OnClickList
         editTextQuantity.setSelection(1);
 
         qrScan = new IntentIntegrator(this);
-        qrScan.setDesiredBarcodeFormats(IntentIntegrator.ONE_D_CODE_TYPES);
+//        qrScan.setDesiredBarcodeFormats(IntentIntegrator.ONE_D_CODE_TYPES);
         qrScan.setOrientationLocked(false);
         qrScan.setBarcodeImageEnabled(true);
-        qrScan.setPrompt("Place a Bar code which contains Item Number to order.");
+        qrScan.setPrompt("Place a QR Code which contains Item Number to order.");
 
         socketHandler = SocketHandler.getInstance();
 
