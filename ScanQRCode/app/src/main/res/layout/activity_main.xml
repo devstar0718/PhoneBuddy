@@ -15,32 +15,41 @@ tools:context=".MainActivity">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="IP" />
+            android:layout_weight="1"
+            android:gravity="bottom|center"
+            android:text="IP"
+            android:textSize="36sp" />
 
         <TextView
             android:id="@+id/textViewIP"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:text="10.10.10.222"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+            android:textSize="36sp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Port" />
+            android:gravity="center"
+            android:text="Port"
+            android:textSize="36sp" />
 
         <TextView
             android:id="@+id/textViewPort"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:gravity="center|top"
             android:text="8090"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+            android:textSize="36sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.3"
+            android:layout_weight="1"
             android:orientation="horizontal">
 
             <Button
@@ -48,14 +57,16 @@ tools:context=".MainActivity">
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="Scan QR Code" />
+                android:text="Scan QR Code"
+                android:textSize="24sp" />
 
             <Button
                 android:id="@+id/buttonConnect"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="Connect" />
+                android:text="Connect"
+                android:textSize="24sp" />
         </LinearLayout>
 
 
@@ -65,6 +76,7 @@ tools:context=".MainActivity">
         android:id="@+id/loadingPanel"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="#C1000000"
         android:gravity="center"
         android:visibility="invisible">
 

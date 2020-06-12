@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         textViewPort.setText(port);
     }
 
-    public void startSnapActivity() {
+    public void startTagActivity() {
         saveSocketInfo();
         runOnUiThread(new Runnable() {
             @Override
@@ -102,8 +102,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 findViewById(R.id.loadingPanel).setVisibility(View.GONE);
             }
         });
-        Intent intent = new Intent(this, SnapActivity.class);
-        Bundle extras = new Bundle();
+        Intent intent = new Intent(this, TagActivity.class);
         startActivity(intent);
     }
 }

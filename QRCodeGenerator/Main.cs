@@ -21,6 +21,7 @@ namespace QRCodeGenerator
         ITcpServer server = null;
         //String socketImage;
         StringBuilder socketImage;
+        private delegate void SafeCallDelegate(string text);
         public Main()
         {
             InitializeComponent();
@@ -60,79 +61,131 @@ namespace QRCodeGenerator
             if (server != null)
                 server.Stop();
 
-            Console.WriteLine("Hello GodSharp.Socket.TcpServerSample!");
 
             server = new TcpServer(int.Parse(textBoxPort.Text), textBoxIP.Text)
             {
                 OnConnected = (c) =>
                 {
-                    Console.WriteLine($"{c.RemoteEndPoint} connected.");
+                    addLog($"{c.RemoteEndPoint} connected.");
                 },
                 OnReceived = (c) =>
                 {
-                    Console.WriteLine($"Received from {c.RemoteEndPoint}:");
+                    //addLog($"Received from {c.RemoteEndPoint}:");
                     String content = System.Text.Encoding.Default.GetString(c.Buffers);
-                    Console.WriteLine(content);
-
-                    int split = content.IndexOf("#"); // # is the spliter between length and data
-                    int token_number = int.Parse(content.Substring(0, split));
-                    Console.WriteLine("Token number: " + token_number.ToString());
-
-                    if (token_number == -1) // end of data
-                    {
-                        byte[] data;
-                        data = Convert.FromBase64String(socketImage.ToString());
-                        using (var stream = new MemoryStream(data, 0, data.Length))
-                        {
-                            try
-                            {
-                                Image image = Image.FromStream(stream);
-                                //TODO: do something with image
-                                pictureBoxImage.Image = image;
-                            }
-                            catch (ArgumentException)
-                            {
-                                Console.WriteLine("Invalid Image");
-                            }
-                        }
-                        socketImage.Clear();
-                    }
-                    else
-                    {
-                        String imageData = content.Substring(split + 1);
-                        socketImage.Append(imageData);
-                        Console.WriteLine("Token size: " + imageData.Length.ToString());
-                    }
-                    byte[] reply = Encoding.ASCII.GetBytes(token_number.ToString() + "\n");
-                    c.NetConnection.Send(reply);
+                    string reply = ParseMessage(content);
+                    c.NetConnection.Send(Encoding.ASCII.GetBytes(reply + "\n"));
                 },
                 OnDisconnected = (c) =>
                 {
-                    Console.WriteLine($"{c.RemoteEndPoint} disconnected.");
+                    addLog($"{c.RemoteEndPoint} disconnected.");
                 },
                 OnStarted = (c) =>
                 {
-                    Console.WriteLine($"{c.LocalEndPoint} started.");
+                    addLog($"{c.LocalEndPoint} started.");
                 },
                 OnStopped = (c) =>
                 {
-                    Console.WriteLine($"{c.LocalEndPoint} stopped.");
+                    addLog($"{c.LocalEndPoint} stopped.");
                 },
                 OnException = (c) =>
                 {
-                    Console.WriteLine($"{c.RemoteEndPoint} exception:{c.Exception.StackTrace.ToString()}.");
+                    addLog($"{c.RemoteEndPoint} exception:{c.Exception.StackTrace.ToString()}.");
                 },
                 OnServerException = (c) =>
                 {
-                    Console.WriteLine($"{c.LocalEndPoint} exception:{c.Exception.StackTrace.ToString()}.");
+                    addLog($"{c.LocalEndPoint} exception:{c.Exception.StackTrace.ToString()}.");
                 }
             };
             server.Start();
         }
 
+        private string ParseMessage(string msg)
+        {
+            var json = JObject.Parse(msg);
+            
+            string type = json["type"].ToString();
+            string content = json["content"].ToString();
+
+            string reply = "";
+            if (type == "picture")
+            {
+                reply = ParsePicture(content);
+            }
+            else if(type == "order")
+            {
+                reply = ParseOrder(content);
+            }
+            return reply;
+        }
+
+        private string ParseOrder(string msg)
+        {
+            var json = JObject.Parse(msg);
+
+            string command = json["command"].ToString();
+
+            if (command == "buy")
+            {
+                addLog("Received: " + json["part"].ToString() + ", " + json["value"].ToString());
+            }
+            else if (command == "undo")
+            {
+                addLog("Received: Undo Last Order");
+            }
+            return "OK";
+        }
+
+        private string ParsePicture(string content)
+        {
+            //addLog(content);
+            int split = content.IndexOf("#"); // # is the spliter between length and data
+            int token_number = int.Parse(content.Substring(0, split));
+            //addLog("Token number: " + token_number.ToString());
+            if (token_number == -1) // end of data
+            {
+                byte[] data;
+                data = Convert.FromBase64String(socketImage.ToString());
+                using (var stream = new MemoryStream(data, 0, data.Length))
+                {
+                    try
+                    {
+                        Image image = Image.FromStream(stream);
+                        //TODO: do something with image
+                        pictureBoxImage.Image = image;
+                        addLog("Received: Image");
+                    }
+                    catch (ArgumentException)
+                    {
+                        addLog("Invalid Image");
+                    }
+                }
+                socketImage.Clear();
+            }
+            else
+            {
+                String imageData = content.Substring(split + 1);
+                socketImage.Append(imageData);
+                //addLog("Token size: " + imageData.Length.ToString());
+            }
+            return token_number.ToString();
+        }
+
         private void pictureBoxImage_DoubleClick(object sender, EventArgs e)
         {
             Clipboard.SetImage(pictureBoxImage.Image);
+        }
+
+        private void addLog(string log)
+        {
+            if (listBoxLog.InvokeRequired)
+            {
+                var d = new SafeCallDelegate(addLog);
+                listBoxLog.Invoke(d, new object[] { log });
+            }
+            else
+            {
+                listBoxLog.Items.Insert(0, log);
+            }
         }
     }
 }

@@ -3,6 +3,9 @@ package com.example.scanqrcode;
 import android.util.Log;
 import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -28,6 +31,8 @@ public class SocketHandler {
 
     private SnapActivity snapActivity = null;
 
+    private OrderActivity orderActivity = null;
+
     public static SocketHandler getInstance() {
         return ourInstance;
     }
@@ -36,37 +41,67 @@ public class SocketHandler {
 
     }
 
+    public boolean isConnected(){
+        return connected;
+    }
     public void connect(MainActivity mainActivity, String ip, int port) {
         this.ip = ip;
         this.port = port;
         new Thread(new ThreadSocketConnect(mainActivity, ip, port)).start();
     }
 
-    public void send(String message, SnapActivity snapActivity) {
+    public void sendPicture(String message, SnapActivity snapActivity) {
         if (!connected) {
-            Log.d("ALEXEI", "Socket not connected.");
+            Toast.makeText(snapActivity, "Socket not connected.", Toast.LENGTH_LONG).show();
             return;
         }
         this.message = message;
         this.snapActivity = snapActivity;
-        snapActivity.setInitalProgressRange(message.length() / token_size);
+        snapActivity.setInitialProgressRange(message.length() / token_size);
         send_token(0);
     }
 
-    public void send_token(int token) {
+    public void sendOrder(String message, OrderActivity orderActivity){
+        if (!connected) {
+            Toast.makeText(orderActivity, "Socket not connected.", Toast.LENGTH_LONG).show();
+            return;
+        }
+        this.orderActivity = orderActivity;
+        JSONObject obj = new JSONObject();
+        try {
+            obj.put("type", "order");
+            obj.put("content", message);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        new Thread(new ThreadSocketSender(obj.toString())).start();
+    }
+
+    private void send_token(int token) {
         int total_size = message.length();
 
         int start_index = token * token_size;
         int end_index = (token + 1) * token_size;
+
+        String content = "";
         if (start_index >= total_size) {
-            new Thread(new ThreadSocketSender("-1#")).start();
-            return;
+            content = "-1#";
         }
-        if (end_index >= total_size) {
-            end_index = total_size - 1;
+        else{
+            if (end_index >= total_size) {
+                end_index = total_size - 1;
+            }
+            content = String.valueOf(token) + "#" + message.substring(start_index, end_index);
         }
-        String content = String.valueOf(token) + "#" + message.substring(start_index, end_index);
-        new Thread(new ThreadSocketSender(content)).start();
+
+        JSONObject obj = new JSONObject();
+        try {
+            obj.put("type", "picture");
+            obj.put("content", content);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        new Thread(new ThreadSocketSender(obj.toString())).start();
     }
 
     class ThreadSocketConnect implements Runnable {
@@ -89,9 +124,10 @@ public class SocketHandler {
                 Log.d("ALEXEI", "Connected");
                 connected = true;
                 new Thread(new ThreadSocketReceiver()).start();
-                this.mainActivity.startSnapActivity();
+                this.mainActivity.startTagActivity();
             } catch (IOException e) {
                 e.printStackTrace();
+                connected = false;
             }
         }
     }
@@ -100,28 +136,29 @@ public class SocketHandler {
         @Override
         public void run() {
             while (true) {
+                if(!connected) break;
                 try {
                     final String message = input.readLine();
                     if (message != null) {
                         Log.d("ALEXEI", "server: " + message);
-//                        int split = message.indexOf("#");
-//                        int token = Integer.parseInt(message.substring(0, split-1));
-                        int token = Integer.parseInt(message);
-                        snapActivity.setProgressValue(token);
-                        if(token >= 0) {
-                            send_token(token + 1);
+                        if(message.equals("OK")){
+                            orderActivity.actionCompleted();
                         }
-                        else {
-                            Log.d("ALEXEI", "Message sent successfully");
-                            snapActivity.dispatchTakePictureIntent();
+                        else{
+                            int token = Integer.parseInt(message);
+                            snapActivity.setProgressValue(token);
+                            if(token >= 0) {
+                                send_token(token + 1);
+                            }
+                            else {
+                                Log.d("ALEXEI", "Message sent successfully");
+                                snapActivity.dispatchTakePictureIntent();
+                            }
                         }
-                    } else {
-//                        Thread1 = new Thread(new ThreadSocketConnect());
-//                        Thread1.start();
-//                        return;
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
+                    connected = false;
                 }
             }
         }

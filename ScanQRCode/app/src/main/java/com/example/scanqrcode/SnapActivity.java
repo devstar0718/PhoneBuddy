@@ -37,7 +37,7 @@ public class SnapActivity extends AppCompatActivity implements View.OnClickListe
 
         buttonCamera = (Button) findViewById(R.id.buttonCamera);
         buttonSend = (Button) findViewById(R.id.buttonSend);
-        imageView = (ImageView) findViewById(R.id.imageView);
+        imageView = (ImageView) findViewById(R.id.imageViewPicture);
         buttonSendHigh = (Button) findViewById(R.id.buttonSend2);
 
         buttonSend.setOnClickListener(this);
@@ -62,7 +62,7 @@ public class SnapActivity extends AppCompatActivity implements View.OnClickListe
             currentImage.compress(Bitmap.CompressFormat.JPEG, 50, byteArrayOutputStream);
             byte[] byteArray = byteArrayOutputStream.toByteArray();
             String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
-            socketHandler.send(encoded, this);
+            socketHandler.sendPicture(encoded, this);
         } else if ((Button) view == buttonSendHigh) {
             if (currentImage == null) {
                 Toast.makeText(this, "Please take a picture with Camera", Toast.LENGTH_LONG).show();
@@ -72,11 +72,11 @@ public class SnapActivity extends AppCompatActivity implements View.OnClickListe
             currentImage.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
             byte[] byteArray = byteArrayOutputStream.toByteArray();
             String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
-            socketHandler.send(encoded, this);
+            socketHandler.sendPicture(encoded, this);
         }
     }
 
-    public void setInitalProgressRange(final int max) {
+    public void setInitialProgressRange(final int max) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -85,6 +85,7 @@ public class SnapActivity extends AppCompatActivity implements View.OnClickListe
                 findViewById(R.id.loadingPanel).setVisibility(View.VISIBLE);
                 findViewById(R.id.buttonCamera).setEnabled(false);
                 findViewById(R.id.buttonSend).setEnabled(false);
+                findViewById(R.id.buttonSend2).setEnabled(false);
             }
         });
     }
@@ -97,6 +98,7 @@ public class SnapActivity extends AppCompatActivity implements View.OnClickListe
                     findViewById(R.id.loadingPanel).setVisibility(View.GONE);
                     findViewById(R.id.buttonCamera).setEnabled(true);
                     findViewById(R.id.buttonSend).setEnabled(true);
+                    findViewById(R.id.buttonSend2).setEnabled(true);
 
                 } else {
                     ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
