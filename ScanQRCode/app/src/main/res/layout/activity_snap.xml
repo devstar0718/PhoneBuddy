@@ -12,7 +12,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <ImageView
+        <com.example.scanqrcode.MyImageView
             android:id="@+id/imageViewPicture"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
