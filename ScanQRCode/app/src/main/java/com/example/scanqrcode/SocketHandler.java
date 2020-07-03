@@ -148,7 +148,7 @@ public class SocketHandler {
                     final String message = input.readLine();
                     if (message != null) {
                         Log.d("ALEXEI", "server: " + message);
-                        if(message.substring(0, 5).equals("MSG: ")){
+                        if(message.length() >=5 && message.substring(0, 5).equals("MSG: ")){
                             currentActivity.ShowText(message.substring(5));
                         }
                         else if (message.equals("OK")) {
