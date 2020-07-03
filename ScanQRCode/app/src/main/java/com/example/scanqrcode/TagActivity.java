@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class TagActivity extends AppCompatActivity implements View.OnClickListener {
+public class TagActivity extends SocketActivity implements View.OnClickListener {
     private Button buttonPicture, buttonOrder;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,6 +18,9 @@ public class TagActivity extends AppCompatActivity implements View.OnClickListen
 
         buttonPicture.setOnClickListener(this);
         buttonOrder.setOnClickListener(this);
+
+        socketHandler = SocketHandler.getInstance();
+        socketHandler.currentActivity = this;
     }
 
     @Override

@@ -58,9 +58,14 @@ namespace QRCodeGenerator
 
         private void buttonSockStart_Click(object sender, EventArgs e)
         {
-            if (server != null)
+            if(server != null && server.Running)
+            {
                 server.Stop();
-
+                buttonSockStart.Text = "Socket Start";
+                server.Dispose();
+                server = null;
+                return;
+            }
 
             server = new TcpServer(int.Parse(textBoxPort.Text), textBoxIP.Text)
             {
@@ -97,6 +102,7 @@ namespace QRCodeGenerator
                 }
             };
             server.Start();
+            buttonSockStart.Text = "Socket Stop";
         }
 
         private string ParseMessage(string msg)
@@ -185,6 +191,23 @@ namespace QRCodeGenerator
             else
             {
                 listBoxLog.Items.Insert(0, log);
+            }
+        }
+
+        private void buttonSendMsg_Click(object sender, EventArgs e)
+        {
+            if(server == null)
+                return;
+            if(textBoxMsg.Text.Length == 0)
+            {
+                MessageBox.Show("Please input message.");
+                textBoxMsg.Focus();
+                return;
+            }
+            var connections = server.Connections;
+            foreach(var connect in connections)
+            {
+                connect.Value.Send("MSG: " + textBoxMsg.Text + "\n");
             }
         }
     }

@@ -1,6 +1,9 @@
 package com.example.scanqrcode;
 
+import android.app.Activity;
+import android.app.Application;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -33,17 +36,22 @@ public class SocketHandler {
 
     private OrderActivity orderActivity = null;
 
+    private Socket socket = null;
+
+    public SocketActivity currentActivity = null;
+
     public static SocketHandler getInstance() {
         return ourInstance;
     }
 
     private SocketHandler() {
-
+        currentActivity = new SocketActivity();
     }
 
-    public boolean isConnected(){
+    public boolean isConnected() {
         return connected;
     }
+
     public void connect(MainActivity mainActivity, String ip, int port) {
         this.ip = ip;
         this.port = port;
@@ -61,7 +69,7 @@ public class SocketHandler {
         send_token(0);
     }
 
-    public void sendOrder(String message, OrderActivity orderActivity){
+    public void sendOrder(String message, OrderActivity orderActivity) {
         if (!connected) {
             Toast.makeText(orderActivity, "Socket not connected.", Toast.LENGTH_LONG).show();
             return;
@@ -86,8 +94,7 @@ public class SocketHandler {
         String content = "";
         if (start_index >= total_size) {
             content = "-1#";
-        }
-        else{
+        } else {
             if (end_index >= total_size) {
                 end_index = total_size - 1;
             }
@@ -116,7 +123,7 @@ public class SocketHandler {
         }
 
         public void run() {
-            Socket socket;
+//            Socket socket;
             try {
                 socket = new Socket(ip, port);
                 output = new PrintWriter(socket.getOutputStream());
@@ -136,28 +143,35 @@ public class SocketHandler {
         @Override
         public void run() {
             while (true) {
-                if(!connected) break;
+                if (!connected) break;
                 try {
                     final String message = input.readLine();
                     if (message != null) {
                         Log.d("ALEXEI", "server: " + message);
-                        if(message.equals("OK")){
-                            orderActivity.actionCompleted();
+                        if(message.substring(0, 5).equals("MSG: ")){
+                            currentActivity.ShowText(message.substring(5));
                         }
-                        else{
+                        else if (message.equals("OK")) {
+                            orderActivity.actionCompleted();
+                        } else {
                             int token = Integer.parseInt(message);
                             snapActivity.setProgressValue(token);
-                            if(token >= 0) {
+                            if (token >= 0) {
                                 send_token(token + 1);
-                            }
-                            else {
+                            } else {
                                 Log.d("ALEXEI", "Message sent successfully");
                                 snapActivity.dispatchTakePictureIntent();
                             }
                         }
+                    } else {
+                        currentActivity.ShowText("Socket Connection has been lost.");
+                        currentActivity.gotoMainActivity();
+                        connected = false;
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
+                    currentActivity.ShowText("Socket Connection has been lost.");
+                    currentActivity.gotoMainActivity();
                     connected = false;
                 }
             }
@@ -179,4 +193,6 @@ public class SocketHandler {
             Log.d("ALEXEI", "client: " + message);
         }
     }
+
+
 }

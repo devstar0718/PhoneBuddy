@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.media.AudioManager;
+import android.media.ToneGenerator;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -18,12 +20,11 @@ import com.google.zxing.integration.android.IntentResult;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class OrderActivity extends AppCompatActivity implements View.OnClickListener {
+public class OrderActivity extends SocketActivity implements View.OnClickListener {
     private IntentIntegrator qrScan;
     private TextView textViewPartNumber;
     private ImageView imageViewBarCode;
     private EditText editTextQuantity;
-    private SocketHandler socketHandler;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +54,7 @@ public class OrderActivity extends AppCompatActivity implements View.OnClickList
         qrScan.setPrompt("Place a QR Code which contains Item Number to order.");
 
         socketHandler = SocketHandler.getInstance();
+        socketHandler.currentActivity = this;
 
         findViewById(R.id.buttonSnap).callOnClick();
     }
@@ -71,7 +73,10 @@ public class OrderActivity extends AppCompatActivity implements View.OnClickList
             case R.id.buttonUndo:
 //                Toast.makeText(this,"Undo", Toast.LENGTH_SHORT).show();
                 if(!socketHandler.isConnected()){
+                    Beep();
                     Toast.makeText(this, "Socket not connected.", Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(this, MainActivity.class);
+                    startActivity(intent);
                     return;
                 }
                 try {
@@ -86,7 +91,10 @@ public class OrderActivity extends AppCompatActivity implements View.OnClickList
                 break;
             case R.id.buttonOrderItem:
                 if(!socketHandler.isConnected()){
+                    Beep();
                     Toast.makeText(this, "Socket not connected.", Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(this, MainActivity.class);
+                    startActivity(intent);
                     return;
                 }
 //                Toast.makeText(this,"Undo", Toast.LENGTH_SHORT).show();
@@ -151,7 +159,16 @@ public class OrderActivity extends AppCompatActivity implements View.OnClickList
                 findViewById(R.id.buttonSnap).setEnabled(true);
                 ((EditText)findViewById(R.id.editTextQuantity)).setText("0");
                 ((EditText)findViewById(R.id.editTextQuantity)).setSelection(1);
+                Beep();
             }
         });
+    }
+
+    private void Beep() {
+        ToneGenerator toneGen1 = new ToneGenerator(AudioManager.STREAM_MUSIC, 100);
+        toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP,150);
+//        Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+//        Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
+//        r.play();
     }
 }

@@ -6,11 +6,16 @@ import androidx.core.content.FileProvider;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.AudioManager;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.media.ToneGenerator;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -23,11 +28,10 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class SnapActivity extends AppCompatActivity implements View.OnClickListener {
+public class SnapActivity extends SocketActivity implements View.OnClickListener {
     private Button buttonCamera, buttonSend, buttonSendHigh;
     private ImageView imageView;
     private Bitmap currentImage = null;
-    private SocketHandler socketHandler;
     private String currentPhotoPath;
 
     @Override
@@ -45,7 +49,7 @@ public class SnapActivity extends AppCompatActivity implements View.OnClickListe
         buttonSendHigh.setOnClickListener(this);
 
         socketHandler = SocketHandler.getInstance();
-
+        socketHandler.currentActivity = this;
         this.onClick(buttonCamera);
     }
 
@@ -62,6 +66,13 @@ public class SnapActivity extends AppCompatActivity implements View.OnClickListe
             currentImage.compress(Bitmap.CompressFormat.JPEG, 50, byteArrayOutputStream);
             byte[] byteArray = byteArrayOutputStream.toByteArray();
             String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
+            if(!socketHandler.isConnected()){
+                Beep();
+                Toast.makeText(this, "Socket not connected.", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+                return;
+            }
             socketHandler.sendPicture(encoded, this);
         } else if ((Button) view == buttonSendHigh) {
             if (currentImage == null) {
@@ -72,6 +83,13 @@ public class SnapActivity extends AppCompatActivity implements View.OnClickListe
             currentImage.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
             byte[] byteArray = byteArrayOutputStream.toByteArray();
             String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
+            if(!socketHandler.isConnected()){
+                Beep();
+                Toast.makeText(this, "Socket not connected.", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+                return;
+            }
             socketHandler.sendPicture(encoded, this);
         }
     }
@@ -99,13 +117,21 @@ public class SnapActivity extends AppCompatActivity implements View.OnClickListe
                     findViewById(R.id.buttonCamera).setEnabled(true);
                     findViewById(R.id.buttonSend).setEnabled(true);
                     findViewById(R.id.buttonSend2).setEnabled(true);
-
+                    Beep();
                 } else {
                     ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
                     progressBar.setProgress(value);
                 }
             }
         });
+    }
+
+    private void Beep() {
+        ToneGenerator toneGen1 = new ToneGenerator(AudioManager.STREAM_MUSIC, 100);
+        toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP,150);
+//        Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+//        Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
+//        r.play();
     }
 
     @Override

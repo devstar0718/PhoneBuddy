@@ -40,6 +40,9 @@
             this.buttonQRGen = new System.Windows.Forms.Button();
             this.listBoxLog = new System.Windows.Forms.ListBox();
             this.pictureBoxQR = new System.Windows.Forms.PictureBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.textBoxMsg = new System.Windows.Forms.TextBox();
+            this.buttonSendMsg = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxImage)).BeginInit();
             this.tableLayoutPanel2.SuspendLayout();
@@ -87,15 +90,19 @@
             this.tableLayoutPanel2.Controls.Add(this.textBoxPort, 1, 1);
             this.tableLayoutPanel2.Controls.Add(this.label1, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.textBoxIP, 1, 0);
-            this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel3, 1, 2);
+            this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel3, 0, 3);
+            this.tableLayoutPanel2.Controls.Add(this.label3, 0, 2);
+            this.tableLayoutPanel2.Controls.Add(this.textBoxMsg, 1, 2);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(6, 7);
             this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 3;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel2.RowCount = 4;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel2.Size = new System.Drawing.Size(414, 190);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
@@ -103,7 +110,7 @@
             // 
             this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(4, 84);
+            this.label2.Location = new System.Drawing.Point(4, 60);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(92, 20);
@@ -114,7 +121,7 @@
             // textBoxPort
             // 
             this.textBoxPort.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxPort.Location = new System.Drawing.Point(103, 81);
+            this.textBoxPort.Location = new System.Drawing.Point(103, 57);
             this.textBoxPort.Name = "textBoxPort";
             this.textBoxPort.Size = new System.Drawing.Size(308, 26);
             this.textBoxPort.TabIndex = 3;
@@ -123,7 +130,7 @@
             // 
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(4, 21);
+            this.label1.Location = new System.Drawing.Point(4, 13);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(92, 20);
@@ -134,33 +141,35 @@
             // textBoxIP
             // 
             this.textBoxIP.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxIP.Location = new System.Drawing.Point(103, 18);
+            this.textBoxIP.Location = new System.Drawing.Point(103, 10);
             this.textBoxIP.Name = "textBoxIP";
             this.textBoxIP.Size = new System.Drawing.Size(308, 26);
             this.textBoxIP.TabIndex = 1;
             // 
             // tableLayoutPanel3
             // 
-            this.tableLayoutPanel3.ColumnCount = 2;
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel3.ColumnCount = 3;
+            this.tableLayoutPanel2.SetColumnSpan(this.tableLayoutPanel3, 2);
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel3.Controls.Add(this.buttonSendMsg, 2, 0);
             this.tableLayoutPanel3.Controls.Add(this.buttonSockStart, 1, 0);
             this.tableLayoutPanel3.Controls.Add(this.buttonQRGen, 0, 0);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(103, 129);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 144);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 1;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 58F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(308, 58);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(408, 43);
             this.tableLayoutPanel3.TabIndex = 4;
             // 
             // buttonSockStart
             // 
             this.buttonSockStart.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonSockStart.Location = new System.Drawing.Point(157, 3);
+            this.buttonSockStart.Location = new System.Drawing.Point(138, 3);
             this.buttonSockStart.Name = "buttonSockStart";
-            this.buttonSockStart.Size = new System.Drawing.Size(148, 52);
+            this.buttonSockStart.Size = new System.Drawing.Size(129, 37);
             this.buttonSockStart.TabIndex = 1;
             this.buttonSockStart.Text = "Socket Start";
             this.buttonSockStart.UseVisualStyleBackColor = true;
@@ -171,7 +180,7 @@
             this.buttonQRGen.Dock = System.Windows.Forms.DockStyle.Fill;
             this.buttonQRGen.Location = new System.Drawing.Point(3, 3);
             this.buttonQRGen.Name = "buttonQRGen";
-            this.buttonQRGen.Size = new System.Drawing.Size(148, 52);
+            this.buttonQRGen.Size = new System.Drawing.Size(129, 37);
             this.buttonQRGen.TabIndex = 0;
             this.buttonQRGen.Text = "QR Generate";
             this.buttonQRGen.UseVisualStyleBackColor = true;
@@ -196,6 +205,37 @@
             this.pictureBoxQR.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.pictureBoxQR.TabIndex = 2;
             this.pictureBoxQR.TabStop = false;
+            // 
+            // label3
+            // 
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(4, 107);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(92, 20);
+            this.label3.TabIndex = 2;
+            this.label3.Text = "Message:";
+            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // textBoxMsg
+            // 
+            this.textBoxMsg.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxMsg.Location = new System.Drawing.Point(103, 104);
+            this.textBoxMsg.Name = "textBoxMsg";
+            this.textBoxMsg.Size = new System.Drawing.Size(308, 26);
+            this.textBoxMsg.TabIndex = 3;
+            // 
+            // buttonSendMsg
+            // 
+            this.buttonSendMsg.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonSendMsg.Location = new System.Drawing.Point(273, 3);
+            this.buttonSendMsg.Name = "buttonSendMsg";
+            this.buttonSendMsg.Size = new System.Drawing.Size(132, 37);
+            this.buttonSendMsg.TabIndex = 2;
+            this.buttonSendMsg.Text = "Send Message";
+            this.buttonSendMsg.UseVisualStyleBackColor = true;
+            this.buttonSendMsg.Click += new System.EventHandler(this.buttonSendMsg_Click);
             // 
             // Main
             // 
@@ -231,6 +271,9 @@
         private System.Windows.Forms.Button buttonSockStart;
         private System.Windows.Forms.Button buttonQRGen;
         private System.Windows.Forms.PictureBox pictureBoxImage;
+        private System.Windows.Forms.Button buttonSendMsg;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox textBoxMsg;
     }
 }
 
