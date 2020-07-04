@@ -36,13 +36,14 @@
             this.label1 = new System.Windows.Forms.Label();
             this.textBoxIP = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+            this.buttonSendMsg = new System.Windows.Forms.Button();
             this.buttonSockStart = new System.Windows.Forms.Button();
             this.buttonQRGen = new System.Windows.Forms.Button();
-            this.listBoxLog = new System.Windows.Forms.ListBox();
-            this.pictureBoxQR = new System.Windows.Forms.PictureBox();
             this.label3 = new System.Windows.Forms.Label();
             this.textBoxMsg = new System.Windows.Forms.TextBox();
-            this.buttonSendMsg = new System.Windows.Forms.Button();
+            this.listBoxLog = new System.Windows.Forms.ListBox();
+            this.pictureBoxQR = new System.Windows.Forms.PictureBox();
+            this.buttonBeep = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxImage)).BeginInit();
             this.tableLayoutPanel2.SuspendLayout();
@@ -67,7 +68,7 @@
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 200F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(851, 584);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1121, 584);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // pictureBoxImage
@@ -75,7 +76,7 @@
             this.pictureBoxImage.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureBoxImage.Location = new System.Drawing.Point(5, 207);
             this.pictureBoxImage.Name = "pictureBoxImage";
-            this.pictureBoxImage.Size = new System.Drawing.Size(416, 372);
+            this.pictureBoxImage.Size = new System.Drawing.Size(551, 372);
             this.pictureBoxImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBoxImage.TabIndex = 3;
             this.pictureBoxImage.TabStop = false;
@@ -103,7 +104,7 @@
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(414, 190);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(549, 190);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
             // label2
@@ -123,7 +124,7 @@
             this.textBoxPort.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxPort.Location = new System.Drawing.Point(103, 57);
             this.textBoxPort.Name = "textBoxPort";
-            this.textBoxPort.Size = new System.Drawing.Size(308, 26);
+            this.textBoxPort.Size = new System.Drawing.Size(443, 26);
             this.textBoxPort.TabIndex = 3;
             // 
             // label1
@@ -143,26 +144,39 @@
             this.textBoxIP.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxIP.Location = new System.Drawing.Point(103, 10);
             this.textBoxIP.Name = "textBoxIP";
-            this.textBoxIP.Size = new System.Drawing.Size(308, 26);
+            this.textBoxIP.Size = new System.Drawing.Size(443, 26);
             this.textBoxIP.TabIndex = 1;
             // 
             // tableLayoutPanel3
             // 
-            this.tableLayoutPanel3.ColumnCount = 3;
+            this.tableLayoutPanel3.ColumnCount = 4;
             this.tableLayoutPanel2.SetColumnSpan(this.tableLayoutPanel3, 2);
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25.00062F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25.00062F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25.00062F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 24.99813F));
             this.tableLayoutPanel3.Controls.Add(this.buttonSendMsg, 2, 0);
             this.tableLayoutPanel3.Controls.Add(this.buttonSockStart, 1, 0);
             this.tableLayoutPanel3.Controls.Add(this.buttonQRGen, 0, 0);
+            this.tableLayoutPanel3.Controls.Add(this.buttonBeep, 3, 0);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 144);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 1;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(408, 43);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(543, 43);
             this.tableLayoutPanel3.TabIndex = 4;
+            // 
+            // buttonSendMsg
+            // 
+            this.buttonSendMsg.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonSendMsg.Location = new System.Drawing.Point(273, 3);
+            this.buttonSendMsg.Name = "buttonSendMsg";
+            this.buttonSendMsg.Size = new System.Drawing.Size(129, 37);
+            this.buttonSendMsg.TabIndex = 2;
+            this.buttonSendMsg.Text = "Send Message";
+            this.buttonSendMsg.UseVisualStyleBackColor = true;
+            this.buttonSendMsg.Click += new System.EventHandler(this.buttonSendMsg_Click);
             // 
             // buttonSockStart
             // 
@@ -186,26 +200,6 @@
             this.buttonQRGen.UseVisualStyleBackColor = true;
             this.buttonQRGen.Click += new System.EventHandler(this.buttonQRGen_Click);
             // 
-            // listBoxLog
-            // 
-            this.listBoxLog.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listBoxLog.FormattingEnabled = true;
-            this.listBoxLog.ItemHeight = 20;
-            this.listBoxLog.Location = new System.Drawing.Point(429, 5);
-            this.listBoxLog.Name = "listBoxLog";
-            this.listBoxLog.Size = new System.Drawing.Size(417, 194);
-            this.listBoxLog.TabIndex = 1;
-            // 
-            // pictureBoxQR
-            // 
-            this.pictureBoxQR.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureBoxQR.Location = new System.Drawing.Point(429, 207);
-            this.pictureBoxQR.Name = "pictureBoxQR";
-            this.pictureBoxQR.Size = new System.Drawing.Size(417, 372);
-            this.pictureBoxQR.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.pictureBoxQR.TabIndex = 2;
-            this.pictureBoxQR.TabStop = false;
-            // 
             // label3
             // 
             this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
@@ -223,25 +217,45 @@
             this.textBoxMsg.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxMsg.Location = new System.Drawing.Point(103, 104);
             this.textBoxMsg.Name = "textBoxMsg";
-            this.textBoxMsg.Size = new System.Drawing.Size(308, 26);
+            this.textBoxMsg.Size = new System.Drawing.Size(443, 26);
             this.textBoxMsg.TabIndex = 3;
             // 
-            // buttonSendMsg
+            // listBoxLog
             // 
-            this.buttonSendMsg.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonSendMsg.Location = new System.Drawing.Point(273, 3);
-            this.buttonSendMsg.Name = "buttonSendMsg";
-            this.buttonSendMsg.Size = new System.Drawing.Size(132, 37);
-            this.buttonSendMsg.TabIndex = 2;
-            this.buttonSendMsg.Text = "Send Message";
-            this.buttonSendMsg.UseVisualStyleBackColor = true;
-            this.buttonSendMsg.Click += new System.EventHandler(this.buttonSendMsg_Click);
+            this.listBoxLog.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listBoxLog.FormattingEnabled = true;
+            this.listBoxLog.ItemHeight = 20;
+            this.listBoxLog.Location = new System.Drawing.Point(564, 5);
+            this.listBoxLog.Name = "listBoxLog";
+            this.listBoxLog.Size = new System.Drawing.Size(552, 194);
+            this.listBoxLog.TabIndex = 1;
+            // 
+            // pictureBoxQR
+            // 
+            this.pictureBoxQR.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pictureBoxQR.Location = new System.Drawing.Point(564, 207);
+            this.pictureBoxQR.Name = "pictureBoxQR";
+            this.pictureBoxQR.Size = new System.Drawing.Size(552, 372);
+            this.pictureBoxQR.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pictureBoxQR.TabIndex = 2;
+            this.pictureBoxQR.TabStop = false;
+            // 
+            // buttonBeep
+            // 
+            this.buttonBeep.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonBeep.Location = new System.Drawing.Point(408, 3);
+            this.buttonBeep.Name = "buttonBeep";
+            this.buttonBeep.Size = new System.Drawing.Size(132, 37);
+            this.buttonBeep.TabIndex = 3;
+            this.buttonBeep.Text = "Beep";
+            this.buttonBeep.UseVisualStyleBackColor = true;
+            this.buttonBeep.Click += new System.EventHandler(this.buttonBeep_Click);
             // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(851, 584);
+            this.ClientSize = new System.Drawing.Size(1121, 584);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -274,6 +288,7 @@
         private System.Windows.Forms.Button buttonSendMsg;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox textBoxMsg;
+        private System.Windows.Forms.Button buttonBeep;
     }
 }
 

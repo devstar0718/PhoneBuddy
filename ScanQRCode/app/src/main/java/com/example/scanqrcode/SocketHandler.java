@@ -151,6 +151,9 @@ public class SocketHandler {
                         if(message.length() >=5 && message.substring(0, 5).equals("MSG: ")){
                             currentActivity.ShowText(message.substring(5));
                         }
+                        else if(message.length() >=5 && message.substring(0, 5).equals("BEP: ")){
+                            currentActivity.Beep();
+                        }
                         else if (message.equals("OK")) {
                             orderActivity.actionCompleted();
                         } else {

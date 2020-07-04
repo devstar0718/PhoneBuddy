@@ -117,7 +117,7 @@ public class SnapActivity extends SocketActivity implements View.OnClickListener
                     findViewById(R.id.buttonCamera).setEnabled(true);
                     findViewById(R.id.buttonSend).setEnabled(true);
                     findViewById(R.id.buttonSend2).setEnabled(true);
-                    Beep();
+//                    Beep();
                 } else {
                     ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
                     progressBar.setProgress(value);
@@ -126,12 +126,12 @@ public class SnapActivity extends SocketActivity implements View.OnClickListener
         });
     }
 
-    private void Beep() {
-        ToneGenerator toneGen1 = new ToneGenerator(AudioManager.STREAM_MUSIC, 100);
-        toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP,150);
-//        Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-//        Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
-//        r.play();
+    public void Beep() {
+//        ToneGenerator toneGen1 = new ToneGenerator(AudioManager.STREAM_MUSIC, 1000);
+//        toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP,300);
+        Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
+        r.play();
     }
 
     @Override

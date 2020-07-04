@@ -210,5 +210,16 @@ namespace QRCodeGenerator
                 connect.Value.Send("MSG: " + textBoxMsg.Text + "\n");
             }
         }
+
+        private void buttonBeep_Click(object sender, EventArgs e)
+        {
+            if (server == null)
+                return;
+            var connections = server.Connections;
+            foreach (var connect in connections)
+            {
+                connect.Value.Send("BEP: \n");
+            }
+        }
     }
 }

@@ -5,7 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.media.AudioManager;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
 import android.media.ToneGenerator;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -73,7 +76,7 @@ public class OrderActivity extends SocketActivity implements View.OnClickListene
             case R.id.buttonUndo:
 //                Toast.makeText(this,"Undo", Toast.LENGTH_SHORT).show();
                 if(!socketHandler.isConnected()){
-                    Beep();
+//                    Beep();
                     Toast.makeText(this, "Socket not connected.", Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(this, MainActivity.class);
                     startActivity(intent);
@@ -91,7 +94,7 @@ public class OrderActivity extends SocketActivity implements View.OnClickListene
                 break;
             case R.id.buttonOrderItem:
                 if(!socketHandler.isConnected()){
-                    Beep();
+//                    Beep();
                     Toast.makeText(this, "Socket not connected.", Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(this, MainActivity.class);
                     startActivity(intent);
@@ -159,16 +162,16 @@ public class OrderActivity extends SocketActivity implements View.OnClickListene
                 findViewById(R.id.buttonSnap).setEnabled(true);
                 ((EditText)findViewById(R.id.editTextQuantity)).setText("0");
                 ((EditText)findViewById(R.id.editTextQuantity)).setSelection(1);
-                Beep();
+//                Beep();
             }
         });
     }
 
-    private void Beep() {
-        ToneGenerator toneGen1 = new ToneGenerator(AudioManager.STREAM_MUSIC, 100);
-        toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP,150);
-//        Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-//        Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
-//        r.play();
+    public void Beep() {
+//        ToneGenerator toneGen1 = new ToneGenerator(AudioManager.STREAM_MUSIC, 100);
+//        toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP,150);
+        Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
+        r.play();
     }
 }
