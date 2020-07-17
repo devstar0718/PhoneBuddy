@@ -155,15 +155,17 @@ public class SocketHandler {
                             currentActivity.Beep();
                         }
                         else if (message.equals("OK")) {
-                            orderActivity.actionCompleted();
+//                            orderActivity.actionCompleted();
+                            currentActivity.gotoTagActivity();
                         } else {
                             int token = Integer.parseInt(message);
                             snapActivity.setProgressValue(token);
                             if (token >= 0) {
                                 send_token(token + 1);
                             } else {
-                                Log.d("ALEXEI", "Message sent successfully");
-                                snapActivity.dispatchTakePictureIntent();
+//                                Log.d("ALEXEI", "Message sent successfully");
+//                                snapActivity.dispatchTakePictureIntent();
+                                currentActivity.gotoTagActivity();
                             }
                         }
                     } else {

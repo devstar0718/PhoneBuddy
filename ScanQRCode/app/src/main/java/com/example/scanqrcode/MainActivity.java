@@ -18,7 +18,7 @@ import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private Button buttonScan, buttonConnect;
+    private Button buttonScan, buttonConnect, buttonAlign;
     private TextView textViewIP, textViewPort;
     private IntentIntegrator qrScan;
 
@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         textViewIP = (TextView) findViewById(R.id.textViewIP);
         textViewPort = (TextView) findViewById(R.id.textViewPort);
         buttonConnect = (Button) findViewById(R.id.buttonConnect);
+        buttonAlign = (Button) findViewById(R.id.buttonAlign);
 
         qrScan = new IntentIntegrator(this);
         qrScan.setOrientationLocked(false);
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         buttonScan.setOnClickListener(this);
         buttonConnect.setOnClickListener(this);
+        buttonAlign.setOnClickListener(this);
 
         socketHandler = SocketHandler.getInstance();
 
@@ -76,6 +78,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //            Toast.makeText(this, "Connected", Toast.LENGTH_LONG).show();
             findViewById(R.id.loadingPanel).setVisibility(View.VISIBLE);
             socketHandler.connect(this, textViewIP.getText().toString(), Integer.parseInt(textViewPort.getText().toString()));
+        }
+        else if((Button)view == buttonAlign){
+            Intent intent = new Intent(this, AlignActivity.class);
+            startActivity(intent);
         }
     }
 

@@ -18,7 +18,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
-        <activity android:name=".OrderActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".HeadAlignActivity"></activity>
+        <activity android:name=".AlignActivity" />
+        <activity android:name=".HeadActivity" />
+        <activity
+            android:name=".OrderActivity"
+            android:screenOrientation="portrait" />
         <activity android:name=".TagActivity" />
 
         <provider
@@ -39,6 +44,7 @@
             android:screenOrientation="fullSensor">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

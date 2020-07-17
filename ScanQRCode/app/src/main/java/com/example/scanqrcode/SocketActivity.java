@@ -39,6 +39,11 @@ public class SocketActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void gotoTagActivity(){
+        Intent intent = new Intent(this, TagActivity.class);
+        startActivity(intent);
+    }
+
     public void Beep() {
 //        ToneGenerator toneGen1 = new ToneGenerator(AudioManager.STREAM_MUSIC, 100);
 //        toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP,150);
