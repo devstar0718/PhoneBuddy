@@ -85,14 +85,14 @@ public class AlignActivity extends AppCompatActivity implements SurfaceHolder.Ca
             synchronized (holder) {
                 Draw();
             }   //call a draw method
-            camera = Camera.open(); //open a camera
+            camera = Camera.open(1); //open a camera
         } catch (Exception e) {
             Log.i("Exception", e.toString());
             return;
         }
         Camera.Parameters param;
         param = camera.getParameters();
-        param.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
+//        param.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
         Display display = ((WindowManager) getSystemService(WINDOW_SERVICE)).getDefaultDisplay();
         if (display.getRotation() == Surface.ROTATION_0) {
             camera.setDisplayOrientation(90);
