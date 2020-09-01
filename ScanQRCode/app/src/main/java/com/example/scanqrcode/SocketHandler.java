@@ -85,6 +85,17 @@ public class SocketHandler {
         new Thread(new ThreadSocketSender(obj.toString())).start();
     }
 
+    public void sendCallID(String message) {
+        JSONObject obj = new JSONObject();
+        try {
+            obj.put("type", "CallID");
+            obj.put("content", message);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        new Thread(new ThreadSocketSender(obj.toString())).start();
+    }
+
     private void send_token(int token) {
         int total_size = message.length();
 
