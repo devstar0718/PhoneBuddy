@@ -165,6 +165,9 @@ public class SocketHandler {
                         else if(message.length() >=5 && message.substring(0, 5).equals("BEP: ")){
                             currentActivity.Beep();
                         }
+                        else if(message.length() >=6 && message.substring(0, 6).equals("CALL: ")){
+                            currentActivity.makeCall(message.substring(6));
+                        }
                         else if (message.equals("OK")) {
 //                            orderActivity.actionCompleted();
                             currentActivity.gotoTagActivity();
